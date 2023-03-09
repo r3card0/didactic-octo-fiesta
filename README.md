@@ -1,2 +1,1 @@
-# didactic-octo-fiesta
-Notes of linux
+# Notes of Linux

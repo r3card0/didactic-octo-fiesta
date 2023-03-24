@@ -13,3 +13,10 @@ Windows Subsystem for Linux is now available in the Microsoft Store!
 You can upgrade by running 'wsl.exe --update' or by visiting https://aka.ms/wslstorepage
 Installing WSL from the Microsoft Store will give you the latest WSL updates, faster.
 For more information please visit https://aka.ms/wslstoreinfo
+
+# Instalar una libreria de Python
+
+````
+sudo apt-get install python3-pandas python3-geopandas
+````
+En este codigo para cada librería se antepone *python3-*

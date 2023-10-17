@@ -20,3 +20,19 @@ For more information please visit https://aka.ms/wslstoreinfo
 sudo apt-get install python3-pandas python3-geopandas
 ````
 En este codigo para cada librería se antepone *python3-*
+
+# How to zip directories
+use the next syntax:
+```
+zip -r <directory_com.zip> directory
+```
+Example: zip the directory **pack1**
+1. use command *zip* adding the flag *-r*
+2. select a name of the zip file, *pack1_compressed.zip*
+3. indicate the directory that will be compressed
+
+```
+zip -r pack1_compressed.zip pack1
+```
+
+

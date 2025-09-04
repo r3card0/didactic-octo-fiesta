@@ -49,3 +49,49 @@ El propósito de `make` es automatizar ⚙️ la compilación.
 
 ## `build-essential`
 Es un meta-paquete que contiene las herramientas básicas para compilar.
+
+# curl https://
+
+# Asegurar que el sistema identifique pyenv
+Al terminar de instalar pyenv, hacer lo siguiente:
+1. Asegurar que el sistema identifique pyenv
+
+Abri el archivo `~/.bashrc`, con **nano** -> `nano ~/.bashrc`
+```bash
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+```
+
+2. Guardar el archivo
+3. Recargar el sistema con: `source ~/.bashrc`
+4. Probar si lo reconoce el sistema con : `pyenv --version`
+
+# Instalar la versión Python 3.8.6
+
+```bash
+cd /usr/src
+sudo wget https://www.python.org/ftp/python/3.8.6/Python-3.8.6.tgz
+sudo tar xzf Python-3.8.6.tgz
+cd Python-3.8.6
+sudo ./configure --enable-optimizations
+sudo make -j$(nproc)
+sudo make altinstall
+```
+
+## Instalar Python 3.8.6
+1. Correr el comando `pyenv install 3.8.6`
+2. Verificar la versión instalada con el comando `pyenv versions` y deberá devolver:
+     ```bash
+     system (set by /home/miusuario/.pyenv/version)
+     3.8.6
+     ```
+## Crear el entorno virtual con la version 3.8.6
+* Ir al directorio donde llevare el proyecto o crearlo
+* Crear el entorno virtual de la version 3.8.6: `pyenv virtualenv 3.8.6  miproyecto`
+* Activar el entorno virtual o que se active automaticamente `pyenv local miproyecto`
+* Confirmar la version del entorno `python --version` y debe retornar `3.8.6`
+* Instalar librerias con `pip install pandas`
+
+Cada libreria quedaría solo dentro de ese entorno, no afecta mi Python 3.10 ni otros proyectos.
+     

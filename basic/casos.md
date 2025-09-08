@@ -1,3 +1,52 @@
+# Nuevo
+# Crear un archivo CSV que contenga la lista de archivos de una carpeta
+Crear un CSV, con la lista de archivos de una carpeta, por ejemplo **Desktop**, me permitira usarlo para manejar los archivos con Python a través de pandas.
+
+Por ejemplo, en un proyecto requeria que todos los achivos **shapefile** fueran expuestos a una función de Python. Entonces, la funcion requeria como parametro, el path de cada archivo. Fue asi que mediante el archivo CSV podia iterar los nombres , agregarles el path comun y pasar cada uno en la funcion.
+
+Para crear el archivo CSV con puros shapefiles usé el siguiente comando en Terminal:
+
+```bash
+ls *.sph > shapes.csv
+```
+
+El comando dice: lista `ls` todos `*` los archivos con extensión `.sph` y pásalos `>` (su nombre) al archivo `shapes.csv`
+
+Una vez creado el archivo, fue usado en la siguiente función de Python:
+
+```python
+import pandas as pd
+
+class GetListFiles:
+    def __init__(self,filepath:str,filename:str) -> None:
+        self.filepath = filepath
+        self.filename = filename
+        
+    # returns a list of shapefiles
+    def get_list_of_files(self):
+        file_name = f"{self.filepath}/{self.filename}"
+        # create a dataframe without headers
+        df = pd.read_csv(file_name,header=None)
+        # set new column
+        df.columns = ["shp_file"]
+        # convert to list
+        files_list = list(df.archivo)
+        return files_list
+    
+    # returns the complete path of every shapefile
+    def set_complete_path(self):  
+        # Create a new list appliying a list comprehension     
+        final_list = [f"{self.filepath}/" + i for i in self.get_list_of_files()]        
+        return final_list
+```
+
+Esta función recibe dos parámetros:
+
+* El path del directorio en común de los archivos
+* El nombre del archivo CSV del cual se extraerán los nombres de cada shapefile
+
+La función retorna una lista de path comun + el nombre del shapefile, implementando una *[list comprehension](https://github.com/r3card0/Python-Notes/blob/main/PythonIntermediate/17_list_comprehensions.ipynb)*. Esta lista será usada en una función de Python para ejecutar una tarea.
+
 # Proceso para instalar Python 3.8.6 y que conviva con la version 10
 
 Instalación típica para preparar el entorno de desarrollo de Python🐍

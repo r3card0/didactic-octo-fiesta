@@ -3,7 +3,7 @@
 
 Comandos en *Terminal* que me permitan sacar un reporte de la cantidad de archivos que hay en un directorio agrupados por su extension.
 
-El siguiente comando me funciona bien porque retorno un pequeño reporte en terminal de la cantidad de archivos agrupados por extensión en el directorio desktop
+El siguiente comando lo corri en WLS y  me funciona bien porque retorno un pequeño reporte en terminal de la cantidad de archivos agrupados por extensión en el directorio desktop
 
 ```bash
 find -type f -name "*.*" | awk -F . '{print $NF}' | sort | uniq -c | sort -nr
@@ -21,14 +21,15 @@ comando1 | comando2 | comando3
 
 La bandera `-nr` en `sort`:
 
-* `-n` ordena numéricamente (no alfabético). Ordena de menor a mayor por definición. Si `sort`no lleva `-n`, entonces ordena alfabéticamente por defaul.
+* `-n` ordena numéricamente (no alfabético). Ordena de menor a mayor por definición. Si `sort` no lleva `-n`, entonces ordena alfabéticamente por defaul.
 * `-r` significa reverso, ordenando de mayor a menor.
 
 Mi resumen es que esta secuencia de comandos generan salidas y con conectadas por el simbolo pipe ` | `:
-* Este grupo de comandos `find -type f -name "*.*"` busca los archivos *¡QUE TENGAN EXTENSION!*, que tenga un punto y algo después, sin considerar su nombre. `*.+` Significa: cualquier nombre + punto + cualquier extensión. Si busca archivos que tengan extensión y *excluye archivos sin punto*.
+
+* Este grupo de comandos `find -type f -name "*.*"` busca los archivos *¡QUE TENGAN EXTENSION!*, que tenga un punto y algo después, sin considerar su nombre. `*.*` Significa: cualquier nombre + punto + cualquier extensión. Si busca archivos que tengan extensión y *excluye archivos sin punto*.
 * el segundo grupo, `awk -F . '{print $NF}' `, como bien mencionaste procesa los datos del comando anterior y procesa por cada linea, usando el punto como separador, -F e imprime los caracteres que van después del punto: ` . `
 *  El comando `sort`, ordena los datos alfabéticamente.
-*  el comando `unique -c` los agrupa y finalmente
+*  El comando `unique -c` los agrupa y finalmente
 *  Los ordena numéricamente de mayor a menor : `sort -nr`
 
 Ejemplo práctico:
@@ -40,6 +41,20 @@ foto.jpg       ← SÍ lo encuentra (tiene punto)
 README         ← NO lo encuentra (sin punto)
 script.py      ← SÍ lo encuentra (tiene punto)
 ```
+
+## Para uso en MAC
+Es necesario agregar el punto `. `, después de `find`. Es necesario agregarlo para indicarle el directorio actual. Usanot punto se infiere que donde estas parado se ejecute el reporte.
+
+```bash
+find . -type f -name "*.*" | awk -F . '{print $NF}' | sort | uniq -c | sort -nr
+```
+
+Si estas parado en directorio raiz y quieres un reporte de otro directorio, la variante es:
+
+```bash
+find ~/Desktop -type f -name "*.*" | awk -F . '{print $NF}' | sort | uniq -c | sort -nr
+```
+
 
 # Crear un archivo CSV que contenga la lista de archivos de una carpeta
 Crear un CSV, con la lista de archivos de una carpeta, por ejemplo **Desktop**, me permitira usarlo para manejar los archivos con Python a través de pandas.

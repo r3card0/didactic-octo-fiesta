@@ -1,4 +1,46 @@
 # Nuevo
+# Comando para crear un reporte de archivos
+
+Comandos en *Terminal* que me permitan sacar un reporte de la cantidad de archivos que hay en un directorio agrupados por su extension.
+
+El siguiente comando me funciona bien porque retorno un pequeño reporte en terminal de la cantidad de archivos agrupados por extensión en el directorio desktop
+
+```bash
+find -type f -name "*.*" | awk -F . '{print $NF}' | sort | uniq -c | sort -nr
+```
+
+`find` es usado para buscar archivos y con la bandera -type . . . pero veo que esta el simbolo '|', cual es su funcion? concatena los diversos grupos de comandos. Entiendo que este grupo de comandos `find -type f -name "*.*"` busca los archivos por extension sin considerar su nombre. el segundo grupo, `awk -F . '{print $NF}' `, como bien mencionaste procesa los datos del comando anterior y procesa por cada linea, usando el punto como separador, -F e imprime los caracteres que van después del punto: ¨.¨. El comando sort, ordena los datos, el comando `unique -c` los agrupa y finalmente los vuelte a ordenar `sort -nr` pero desconozco que hace la flag `-nr`
+
+El símbolo pipe ` | `, no concatena, sino que *conecta la salida de un comando con la entrada del siguiente* Es como una tuberia que pasa datos de izquierda a derecha:
+
+```
+comando1 | comando2 | comando3
+   ↓         ↓         ↓
+ salida → entrada → salida
+```
+
+La bandera `-nr` en `sort`:
+
+* `-n` ordena numéricamente (no alfabético). Ordena de menor a mayor por definición. Si `sort`no lleva `-n`, entonces ordena alfabéticamente por defaul.
+* `-r` significa reverso, ordenando de mayor a menor.
+
+Mi resumen es que esta secuencia de comandos generan salidas y con conectadas por el simbolo pipe ` | `:
+* Este grupo de comandos `find -type f -name "*.*"` busca los archivos *¡QUE TENGAN EXTENSION!*, que tenga un punto y algo después, sin considerar su nombre. `*.+` Significa: cualquier nombre + punto + cualquier extensión. Si busca archivos que tengan extensión y *excluye archivos sin punto*.
+* el segundo grupo, `awk -F . '{print $NF}' `, como bien mencionaste procesa los datos del comando anterior y procesa por cada linea, usando el punto como separador, -F e imprime los caracteres que van después del punto: ` . `
+*  El comando `sort`, ordena los datos alfabéticamente.
+*  el comando `unique -c` los agrupa y finalmente
+*  Los ordena numéricamente de mayor a menor : `sort -nr`
+
+Ejemplo práctico:
+
+```bash
+# En tu directorio tienes:
+archivo.txt    ← SÍ lo encuentra (tiene punto)
+foto.jpg       ← SÍ lo encuentra (tiene punto) 
+README         ← NO lo encuentra (sin punto)
+script.py      ← SÍ lo encuentra (tiene punto)
+```
+
 # Crear un archivo CSV que contenga la lista de archivos de una carpeta
 Crear un CSV, con la lista de archivos de una carpeta, por ejemplo **Desktop**, me permitira usarlo para manejar los archivos con Python a través de pandas.
 
